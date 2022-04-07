@@ -14,6 +14,8 @@ echo "Image: ${IMAGE}"
 echo "Release version: ${RELEASE_VERSION}"
 echo "Namespace: ${NAMESPACE}"
 
+: ${ENABLE_CANARY:=1}
+
 if [[ ! -z ${ENABLE_CANARY:-} ]]; then
     CANARY_IMAGE=$(oc get -n openshift-ingress-operator deployments/ingress-operator -o json | jq -r '.spec.template.spec.containers[0].env[] | select(.name=="CANARY_IMAGE").value')
     echo "Canary Image: ${CANARY_IMAGE}"
